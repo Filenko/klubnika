@@ -1,0 +1,9 @@
+flask 
+psycopg2
+pyTelegramBotAPI
+Pillow
+Flask-SQLAlchemy
+Flask-Migrate
+
+
+
