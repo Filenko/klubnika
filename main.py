@@ -47,16 +47,17 @@ def get_stats(message):
             reply_message += f"{i + 1}. {item[1].strip()} has {item[2]} pulls_ups and {item[3]} press\n"
         bot.reply_to(message, reply_message)
 
+
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
     reply_message = message.text.split()
-    add_pull_up(message.from_user.id, reply_message[1])
-    bot.reply_to(message, f'Добавлено {reply_message[1]} пресс')
+    add_pull_up(message.from_user.id, Int(reply_message[1]))
+    bot.reply_to(message, 'kk')
 
 @bot.message_handler(commands=["press"])
 def get_stats(message):
     reply_message = message.text.split()
-    add_press(message.from_user.id, reply_message[1])
+    add_press(message.from_user.id, Int(reply_message[1]))
     bot.reply_to(message, f'Добавлено {reply_message[1]} пресс')
 
 
