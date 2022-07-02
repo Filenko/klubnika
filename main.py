@@ -16,7 +16,7 @@ def add_pull_up(user_id, count):
     db_connection.commit()
 
 def add_press(user_id, count):
-    db_object.execute(f"UPDATE users SET pull_up = press + count WHERE user_id = {user_id}")
+    db_object.execute(f"UPDATE users SET press = press + count WHERE user_id = {user_id}")
     db_connection.commit()
 
 
@@ -50,22 +50,13 @@ def get_stats(message):
 
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
-    
     add_pull_up(message.from_user.id, 10)
-    bot.reply_to(message, "Добавлены ажимания!")
+    bot.reply_to(message, message.text)
 
 @bot.message_handler(commands=["press"])
 def get_stats(message):
-    
     add_press(message.from_user.id, 10)
-    bot.reply_to(message, "Добавлен пресс!")
-
-
-
-@bot.message_handler(func=lambda message: True, content_types=["text"])
-def message_from_user(message):
-    user_id = message.from_user.id
-    update_messages_count(user_id)
+    bot.reply_to(message, message.text)
 
 
 @server.route(f"/{BOT_TOKEN}", methods=["POST"])
@@ -74,7 +65,6 @@ def redirect_message():
     update = telebot.types.Update.de_json(json_string)
     bot.process_new_updates([update])
     return "!", 200
-
 
 if __name__ == "__main__":
     bot.remove_webhook()
