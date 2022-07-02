@@ -17,7 +17,7 @@ def send_welcome(message):
     username = tg_usr.username if tg_usr.username != None else '-' 
     bot.reply_to(message, f"Hello, {username}!")
 
-    db_object.execute(f"SELECT id FROM users WHERE id = {user_id}")
+    db_object.execute(f"SELECT user_id FROM users WHERE user_id = {user_id}")
     result = db_object.fetchone()
 
     if not result:
