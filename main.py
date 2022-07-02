@@ -50,13 +50,23 @@ def get_stats(message):
 
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
-    add_pull_up(message.from_user.id, 10)
-    bot.reply_to(message, message.text)
+    reply_message = message.text.split()
+    if len(reply_message) == 1:
+        add_pull_up(message.from_user.id, 10)
+        bot.reply_to(message, f'Добавлено 10 ажиманя')    
+    else:
+        add_pull_up(message.from_user.id, reply_message[1])
+        bot.reply_to(message, f'Добавлено {reply_message[1]} ажиманя')
 
 @bot.message_handler(commands=["press"])
 def get_stats(message):
-    add_press(message.from_user.id, 10)
-    bot.reply_to(message, message.text)
+    reply_message = message.text.split()
+    if len(reply_message) == 1:
+        add_press(message.from_user.id, 10)
+        bot.reply_to(message, f'Добавлено 10 пресс')    
+    else:
+        add_press(message.from_user.id, reply_message[1])
+        bot.reply_to(message, f'Добавлено {reply_message[1]} пресс')
 
 
 @server.route(f"/{BOT_TOKEN}", methods=["POST"])
