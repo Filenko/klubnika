@@ -50,12 +50,12 @@ def get_stats(message):
 
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
-    add_pull_up(message.from_user.id, 10)
+    #add_pull_up(message.from_user.id, 10)
     bot.reply_to(message, message.text)
 
 @bot.message_handler(commands=["press"])
 def get_stats(message):
-    add_press(message.from_user.id, 10)
+    #add_press(message.from_user.id, 10)
     bot.reply_to(message, message.text)
 
 
