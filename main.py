@@ -23,8 +23,9 @@ def send_welcome(message):
     if not result:
         db_object.execute("INSERT INTO users(user_id, username, pull_up, press) VALUES (%s, %s, %s, %s)", (user_id, username, 0, 0))
         db_connection.commit()
+        bot.reply_to(message, f"Privet!")        
 
-    update_messages_count(user_id)
+    
 
 
 @bot.message_handler(func=lambda message: True)
