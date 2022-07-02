@@ -50,15 +50,15 @@ def get_stats(message):
 
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
-    reply_message = message.text.split()
-    add_pull_up(message.from_user.id, Int(reply_message[1]))
-    bot.reply_to(message, 'kk')
+    
+    add_pull_up(message.from_user.id, 10)
+    bot.reply_to(message, "Добавлены ажимания!")
 
 @bot.message_handler(commands=["press"])
 def get_stats(message):
-    reply_message = message.text.split()
-    add_press(message.from_user.id, Int(reply_message[1]))
-    bot.reply_to(message, f'Добавлено {reply_message[1]} пресс')
+    
+    add_press(message.from_user.id, 10)
+    bot.reply_to(message, "Добавлен пресс!")
 
 
 
