@@ -12,11 +12,11 @@ db_object = db_connection.cursor()
 
 
 def add_pull_up(user_id, count):
-    db_object.execute(f"UPDATE users SET pull_up = pull_up + count WHERE user_id = {user_id}")
+    db_object.execute(f"UPDATE users SET pull_up = pull_up + {count} WHERE user_id = {user_id}")
     db_connection.commit()
 
 def add_press(user_id, count):
-    db_object.execute(f"UPDATE users SET press = press + count WHERE user_id = {user_id}")
+    db_object.execute(f"UPDATE users SET press = press + {count} WHERE user_id = {user_id}")
     db_connection.commit()
 
 
@@ -50,12 +50,12 @@ def get_stats(message):
 
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
-    #add_pull_up(message.from_user.id, 10)
+    add_pull_up(message.from_user.id, 10)
     bot.reply_to(message, message.text)
 
 @bot.message_handler(commands=["press"])
 def get_stats(message):
-    #add_press(message.from_user.id, 10)
+    add_press(message.from_user.id, 10)
     bot.reply_to(message, message.text)
 
 
@@ -69,4 +69,5 @@ def redirect_message():
 if __name__ == "__main__":
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
+    #bot.infinity_polling()
     server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)))
