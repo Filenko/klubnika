@@ -47,6 +47,13 @@ def get_stats(message):
             reply_message += f"{i + 1}. {item[1].strip()} has {item[2]} pulls_ups and {item[3]} press\n"
         bot.reply_to(message, reply_message)
 
+@bot.message_handler(commands=["pull_up"])
+def get_stats(message):
+    
+    reply_message = message.text
+    bot.reply_to(message, reply_message)
+
+
 
 @bot.message_handler(func=lambda message: True, content_types=["text"])
 def message_from_user(message):
