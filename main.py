@@ -1,20 +1,25 @@
-import telebot
-from flask import Flask , render_template, jsonify, request, redirect, url_for, jsonify
-import psycopg2
 import os
+import telebot
+import psycopg2
+from config import *
+from flask import Flask, request
 
-bot = telebot.TeleBot("5208570240:AAGQmP5plGxVk8h8MSsRVy_d8gKhiRlaUXc")
-app = Flask(__name__)
+bot = telebot.TeleBot(BOT_TOKEN)
+server = Flask(__name__)
 
-DB_URI = 'postgres://sxszeitvskatkt:252fcca6ea55cf02d40f2f9b8bbbe10d534d55b546b37764c37ad178a66ccfca@ec2-44-205-41-76.compute-1.amazonaws.com:5432/d9pu6bj42i81g3'
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
 
-@bot.message_handler(commands=['start', 'help'])
-def send_welcome(message):
 
+def update_messages_count(user_id):
+    db_object.execute(f"UPDATE users SET pull_up = pull_up + 1 WHERE user_id = {user_id}")
+    db_connection.commit()
+
+
+@bot.message_handler(commands=["start"])
+def start(message):
     user_id = message.from_user.id
-    username = tg_usr.username if tg_usr.username != None else '-' 
+    username = message.from_user.username
     bot.reply_to(message, f"Hello, {username}!")
 
     db_object.execute(f"SELECT user_id FROM users WHERE user_id = {user_id}")
@@ -23,25 +28,41 @@ def send_welcome(message):
     if not result:
         db_object.execute("INSERT INTO users(user_id, username, pull_up, press) VALUES (%s, %s, %s, %s)", (user_id, username, 0, 0))
         db_connection.commit()
-        bot.reply_to(message, f"Privet!")        
 
-    
+    update_messages_count(user_id)
 
 
-@bot.message_handler(func=lambda message: True)
-def echo_all(message):
-    bot.reply_to(message, message.text)
+@bot.message_handler(commands=["stats"])
+def get_stats(message):
+    db_object.execute("SELECT * FROM users ORDER BY pull_up DESC LIMIT 10")
+    result = db_object.fetchall()
 
-@app.route("/")
-def home():
-    bot.remove_webhook()
-    bot.set_webhook(url='https://klubnika.herokuapp.com')
-    return "1", 200
+    if not result:
+        bot.reply_to(message, "No data...")
+    else:
+        reply_message = "- Top flooders:\n"
+        for i, item in enumerate(result):
+            reply_message += f"[{i + 1}] {item[1].strip()} ({item[0]}) : {item[2]} messages.\n"
+        bot.reply_to(message, reply_message)
 
-@app.route('/', methods=['POST'])
-def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    update_messages_count(message.from_user.id)
+
+
+@bot.message_handler(func=lambda message: True, content_types=["text"])
+def message_from_user(message):
+    user_id = message.from_user.id
+    update_messages_count(user_id)
+
+
+@server.route(f"/{BOT_TOKEN}", methods=["POST"])
+def redirect_message():
+    json_string = request.get_data().decode("utf-8")
+    update = telebot.types.Update.de_json(json_string)
+    bot.process_new_updates([update])
     return "!", 200
 
-if __name__=="__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8443)))
+
+if __name__ == "__main__":
+    bot.remove_webhook()
+    bot.set_webhook(url=APP_URL)
+    server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)))
