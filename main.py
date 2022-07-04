@@ -11,6 +11,7 @@ db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
 
 
+
 def add_pull_up(user_id, count):
     db_object.execute(f"UPDATE users SET pull_up = pull_up + {count} WHERE user_id = {user_id}")
     db_connection.commit()
@@ -47,7 +48,7 @@ def get_stats(message):
         for i, item in enumerate(result):
             flag = ''
             if item[2] >= 100 and item[3] >= 100:
-                flag = 'U+2705'
+                flag = '✅'
             reply_message += f"{i + 1}.{flag}{item[1].strip()} has {item[2]} анжуманя and {item[3]} прес\n"
         bot.reply_to(message, reply_message)
 
