@@ -52,11 +52,11 @@ def get_stats(message):
 def get_stats(message):
     reply_message = message.text.split()
     if len(reply_message) == 1:
-        add_pull_up(message.from_user.id, 10)
-        bot.reply_to(message, f'Добавлено 10 ажиманя')    
+        add_pull_up (message.from_user.id, 10)
+        bot.reply_to(message, f'Добавлено 10 анжуманя')    
     else:
         add_pull_up(message.from_user.id, reply_message[1])
-        bot.reply_to(message, f'Добавлено {reply_message[1]} ажиманя')
+        bot.reply_to(message, f'Добавлено {reply_message[1]} анжуманя')
 
 @bot.message_handler(commands=["press"])
 def get_stats(message):
@@ -72,7 +72,7 @@ def get_stats(message):
 @server.route(f"/{BOT_TOKEN}", methods=["POST"])
 def redirect_message():
     json_string = request.get_data().decode("utf-8")
-    update = telebot.types.Update.de_json(json_string)
+    update = telebot.types.Update.de_json(json_string)456
     bot.process_new_updates([update])
     return "!", 200
 
