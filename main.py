@@ -42,8 +42,9 @@ def get_stats(message):
     if not result:
         bot.reply_to(message, "No data...")
     else:
+        result = result[::-1]
         reply_message = "Top:\n"
-        for i, item in enumerate(reverse(result)):
+        for i, item in enumerate(result):
             reply_message += f"{i + 1}. {item[1].strip()} has {item[2]} pulls_ups and {item[3]} press\n"
         bot.reply_to(message, reply_message)
 
