@@ -45,7 +45,10 @@ def get_stats(message):
         result = result[::-1]
         reply_message = "Top:\n"
         for i, item in enumerate(result):
-            reply_message += f"{i + 1}. {item[1].strip()} has {item[2]} анжуманя and {item[3]} прес\n"
+            flag = ''
+            if item[2] >= 100 and item[3] >= 100:
+                flag = U+2705
+            reply_message += f"{flag}{i + 1}. {item[1].strip()} has {item[2]} анжуманя and {item[3]} прес\n"
         bot.reply_to(message, reply_message)
 
 
