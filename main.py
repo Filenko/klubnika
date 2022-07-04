@@ -49,7 +49,7 @@ def get_stats(message):
             flag = ''
             if item[2] >= 100 and item[3] >= 100:
                 flag = '✅'
-            reply_message += f"{i + 1}.{flag}{item[1].strip()} has {item[2]} анжуманя and {item[3]} прес\n"
+            reply_message += f"{flag}{i + 1}.{item[1].strip()} has {item[2]} анжуманя and {item[3]} прес\n"
         bot.reply_to(message, reply_message)
 
 
