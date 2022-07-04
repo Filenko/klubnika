@@ -45,7 +45,7 @@ def get_stats(message):
         result = result[::-1]
         reply_message = "Top:\n"
         for i, item in enumerate(result):
-            reply_message += f"{i + 1}. {item[1].strip()} has {item[2]} pulls_ups and {item[3]} press\n"
+            reply_message += f"{i + 1}. {item[1].strip()} has {item[2]} анжуманя and {item[3]} прес\n"
         bot.reply_to(message, reply_message)
 
 
