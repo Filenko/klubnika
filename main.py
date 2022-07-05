@@ -33,9 +33,11 @@ def start(message):
     result = db_object.fetchone()
 
     if not result:
+        print("111")
         db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer_press, buffer_pull) VALUES (%s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500, 500))
         db_connection.commit()
-    else: 
+    else:
+        print("222") 
         bot.reply_to(message, f"{result[0]}, {result[1]}, {result[2]}, {result[3]}, {result[4]}, {result[5]}!")        
 
 
