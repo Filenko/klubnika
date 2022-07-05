@@ -5,6 +5,5 @@ Pillow
 Flask-SQLAlchemy
 Flask-Migrate
 schedule
-threading
 
 
