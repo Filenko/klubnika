@@ -70,17 +70,19 @@ def get_stats(message):
 
 @bot.message_handler(commands=["me"])
 def get_stats(message):
-    db_object.execute(f"select * from users where user_id = {message.from_user.id}")
-    result = db_object.fetchonea()
-
+    db_object.execute(f"SELECT * FROM USERS WHERE user_id = {message.from_user.id}")
+    result = db_object.fetchall()
+    print("111")
     if not result:
         bot.reply_to(message, "No data...")
     else:
         try: 
             reply_message = ""
             reply_message += f"Сделал {result[2]} ажуманий и {result[3]} преСа\n"
+            print("1141414")
             bot.reply_to(message, reply_message)
         except Exception as e:
+            print(e, "23123")
             bot.reply_to(message, e)
 
 @bot.message_handler(commands=["pull_up"])
