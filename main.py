@@ -33,8 +33,7 @@ def start(message):
     result = db_object.fetchone()
 
     if not result:
-        print("111")
-        db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer_press, buffer_pull) VALUES (%s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500, 500))
+        db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer_press, buffer_pull) VALUES (%s, %s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500, 500))
         db_connection.commit()
     else:
         print("222") 
