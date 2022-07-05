@@ -97,7 +97,7 @@ def update_daily():
     now = datetime.now()
     current_time = now.strftime("%H:%M")
 
-    if current_time == "06:33":
+    if current_time == "06:36":
         print(current_time)
         db_object.execute("""
             update Users set buffer_press = buffer_press - 100 + press
