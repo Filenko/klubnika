@@ -51,7 +51,7 @@ def get_stats(message):
             flag = ''
             if item[2] >= 100 and item[3] >= 100:
                 flag = '✅'
-            reply_message += f"{flag}{i + 1}.{item[1].strip()} сделал {item[2]} анжуманя и {item[3]} прес\n"
+            reply_message += f"{flag} {i + 1}.{item[1].strip()} сделал {item[2]} анжуманя и {item[3]} прес\n"
         bot.reply_to(message, reply_message)
 
 @bot.message_handler(commands=["buffer"])
@@ -78,7 +78,10 @@ def get_stats(message):
     else:
         try: 
             reply_message = ""
-            reply_message += f"Сделал {result[0][2]} ажуманий и {result[0][3]} преСа\n"
+            flag = ""
+            if result[0][2] >= 100 and result[0][3] >= 100:
+                flag = '✅'
+            reply_message += f"{flag} Сделал {result[0][2]} ажуманий и {result[0][3]} преСа\n"
             print(result)
             bot.reply_to(message, reply_message)
         except Exception as e:
