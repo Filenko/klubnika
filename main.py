@@ -94,6 +94,7 @@ def schedule_checker():
         sleep(1)
 
 def update_daily():
+    print("Hello, Tima!")
     db_object.execute("""
         update Users set buffer_press = buffer_press - 100 + press
         where press < 100;
@@ -112,7 +113,7 @@ if __name__ == "__main__":
     bot.set_webhook(url=APP_URL)
     #schedule.every(2).minutes.do(update_daily)
     # #schedule.every().day.at("05:28").do(update_daily)
-    schedule.every().day.at("06:26").do(update_daily)
+    schedule.every(30).seconds.do(update_daily)
     Thread(target=schedule_checker).start() 
     #bot.infinity_polling()
     server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)))
