@@ -97,8 +97,7 @@ def update_daily():
     now = datetime.now()
     current_time = now.strftime("%H:%M")
     print(current_time)
-    bot.send_message(341883930, current_time)
-    if current_time == "06:36":
+    if current_time == "21:00":
         print(current_time)
         db_object.execute("""
             update Users set buffer_press = buffer_press - 100 + press
@@ -108,7 +107,7 @@ def update_daily():
             update Users set pull_up = 0, press = 0;
             """)
         db_connection.commit()
-        bot.send_message(341883930, "This is a message to send.")
+        
 
 
 
@@ -118,7 +117,7 @@ if __name__ == "__main__":
     bot.set_webhook(url=APP_URL)
     #schedule.every(2).minutes.do(update_daily)
     # #schedule.every().day.at("05:28").do(update_daily)
-    schedule.every(45).seconds.do(update_daily)
+    schedule.every(30).seconds.do(update_daily)
     Thread(target=schedule_checker).start() 
     #bot.infinity_polling()
     server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)))
