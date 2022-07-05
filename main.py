@@ -34,10 +34,7 @@ def start(message):
 
     if not result:
         db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer_press, buffer_pull) VALUES (%s, %s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500, 500))
-        db_connection.commit()
-    else:
-        print("222") 
-        bot.reply_to(message, f"{result[0]}, {result[1]}, {result[2]}, {result[3]}, {result[4]}, {result[5]}!")        
+        db_connection.commit() 
 
 
 @bot.message_handler(commands=["stats"])
@@ -79,9 +76,12 @@ def get_stats(message):
     if not result:
         bot.reply_to(message, "No data...")
     else:
-        reply_message = ""
-        reply_message += f"Сделал {result[2]} ажуманий и {result[3]} преСа\n"
-        bot.reply_to(message, reply_message)
+        try: 
+            reply_message = ""
+            reply_message += f"Сделал {result[2]} ажуманий и {result[3]} преСа\n"
+            bot.reply_to(message, reply_message)
+        except Exception as e:
+            bot.reply_to(message, e)
 
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
