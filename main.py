@@ -46,12 +46,25 @@ def get_stats(message):
         bot.reply_to(message, "No data...")
     else:
         result = result[::-1]
-        reply_message = "Top:\n"
+        reply_message = "Топ:\n"
         for i, item in enumerate(result):
             flag = ''
             if item[2] >= 100 and item[3] >= 100:
                 flag = '✅'
-            reply_message += f"{flag}{i + 1}.{item[1].strip()} has {item[2]} анжуманя and {item[3]} прес\n"
+            reply_message += f"{flag}{i + 1}.{item[1].strip()} сделал {item[2]} анжуманя и {item[3]} прес\n"
+        bot.reply_to(message, reply_message)
+
+@bot.message_handler(commands=["buffer"])
+def get_stats(message):
+    db_object.execute("SELECT * FROM users ORDER BY pull_up")
+    result = db_object.fetchall()
+
+    if not result:
+        bot.reply_to(message, "No data...")
+    else:
+        reply_message = "Буфер:\n"
+        for i, item in enumerate(result):
+            reply_message += f"У {item[1].strip()} осталось {item[5]} ажуманий и {item[4]} преСа\n"
         bot.reply_to(message, reply_message)
 
 
