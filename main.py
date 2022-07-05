@@ -89,7 +89,7 @@ def index():
 if __name__ == "__main__":
     now = datetime.now()
     current_time = now.strftime("%H:%M")
-    if current_time == "05:05":
+    if current_time == "05:09":
         print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         add_press(341883930, 100)
     bot.remove_webhook()
