@@ -100,8 +100,9 @@ def update_daily():
 
 
 if __name__ == "__main__":
-    
-    schedule.every().day.at("05:28").do(update_daily)
+
+    schedule.every(1).minutes.do(update_daily)
+    #schedule.every().day.at("05:28").do(update_daily)
     Thread(target=schedule_checker).start() 
 
     bot.remove_webhook()
