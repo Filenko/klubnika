@@ -110,9 +110,9 @@ if __name__ == "__main__":
 
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
-    schedule.every(2).minutes.do(update_daily)
+    #schedule.every(2).minutes.do(update_daily)
     # #schedule.every().day.at("05:28").do(update_daily)
     #schedule.every().day.at("6:21").do(update_daily)
-    Thread(target=schedule_checker).start() 
+    #Thread(target=schedule_checker).start() 
     #bot.infinity_polling()
-    server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)), debug = True)
+    server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)))
