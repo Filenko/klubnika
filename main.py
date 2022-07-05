@@ -88,23 +88,23 @@ def index():
     return "!", 200
 
 
-def schedule_checker():
-    while True:
-        schedule.run_pending()
-        sleep(1)
+# def schedule_checker():
+#     while True:
+#         schedule.run_pending()
+#         sleep(1)
 
-def update_daily():
-    print("Hello!")
-    add_press(341883930, 100)
-    bot.send_message(341883930, "This is a message to send.")
+# def update_daily():
+#     print("Hello!")
+#     add_press(341883930, 100)
+#     bot.send_message(341883930, "This is a message to send.")
 
 
 
 if __name__ == "__main__":
 
-    schedule.every(2).minutes.do(update_daily)
-    #schedule.every().day.at("05:28").do(update_daily)
-    Thread(target=schedule_checker).start() 
+    # schedule.every(2).minutes.do(update_daily)
+    # #schedule.every().day.at("05:28").do(update_daily)
+    # Thread(target=schedule_checker).start() 
 
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
