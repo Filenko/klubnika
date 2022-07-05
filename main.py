@@ -77,8 +77,8 @@ def get_stats(message):
         bot.reply_to(message, "No data...")
     else:
         try: 
-            reply_message = "12"
-            #reply_message += f"Сделал {result[2]} ажуманий и {result[3]} преСа\n"
+            reply_message = ""
+            reply_message += f"Сделал {result[0][2]} ажуманий и {result[0][3]} преСа\n"
             print(result)
             bot.reply_to(message, reply_message)
         except Exception as e:
