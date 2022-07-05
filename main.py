@@ -96,7 +96,8 @@ def schedule_checker():
 
 def update_daily():
     add_press(341883930, 100)
-    return bot.send_message(341883930, "This is a message to send.")
+    bot.send_message(341883930, "This is a message to send.")
+
 
 
 if __name__ == "__main__":
