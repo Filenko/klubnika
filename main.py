@@ -3,6 +3,7 @@ import telebot
 import psycopg2
 from config import *
 from flask import Flask, request
+from datetime import datetime
 
 bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
@@ -31,7 +32,7 @@ def start(message):
     result = db_object.fetchone()
 
     if not result:
-        db_object.execute("INSERT INTO users(user_id, username, pull_up, press) VALUES (%s, %s, %s, %s)", (user_id, username, 0, 0))
+        db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer) VALUES (%s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500))
         db_connection.commit()
 
 
@@ -81,7 +82,15 @@ def redirect_message():
     bot.process_new_updates([update])
     return "!", 200
 
+@server.route("/", methods=["HEAD", "GET"])
+    return "!", 200
+
 if __name__ == "__main__":
+    now = datetime.now()
+    current_time = now.strftime("%H:%M")
+    if current_time == "05:05":
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        add_press(341883930, 100)
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
     #bot.infinity_polling()
