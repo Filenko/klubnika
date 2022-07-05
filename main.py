@@ -96,7 +96,8 @@ def schedule_checker():
 def update_daily():
     now = datetime.now()
     current_time = now.strftime("%H:%M")
-
+    print(current_time)
+    bot.send_message(341883930, current_time)
     if current_time == "06:36":
         print(current_time)
         db_object.execute("""
