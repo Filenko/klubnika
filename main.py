@@ -4,6 +4,8 @@ import psycopg2
 from config import *
 from flask import Flask, request
 from datetime import datetime
+from threading import Thread
+import schedule
 
 bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
@@ -86,12 +88,22 @@ def redirect_message():
 def index():
     return "!", 200
 
-if __name__ == "__main__":
-    now = datetime.now()
-    current_time = now.strftime("%H:%M")
-    
-    bot.send_message(341883930,"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
+def schedule_checker():
+    while True:
+        schedule.run_pending()
+        sleep(1)
+
+def update_daily():
     add_press(341883930, 100)
+    return bot.send_message(341883930, "This is a message to send.")
+
+
+if __name__ == "__main__":
+    
+    schedule.every().day.at("05:28").do(update_daily)
+    Thread(target=schedule_checker).start() 
+
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
     #bot.infinity_polling()
