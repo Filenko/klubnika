@@ -77,7 +77,7 @@ def get_stats(message):
         bot.reply_to(message, "No data...")
     else:
         reply_message = ""
-        reply_message += f"Сделал {item[2]} ажуманий и {item[3]} преСа\n"
+        reply_message += f"Сделал {result[2]} ажуманий и {result[3]} преСа\n"
         bot.reply_to(message, reply_message)
 
 @bot.message_handler(commands=["pull_up"])
