@@ -35,6 +35,8 @@ def start(message):
     if not result:
         db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer_press, buffer_pull) VALUES (%s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500, 500))
         db_connection.commit()
+    else: 
+        bot.reply_to(message, f"{result[0]}, {result[1]}, {result[2]}, {result[3]}, {result[4]}, {result[5]}!")        
 
 
 @bot.message_handler(commands=["stats"])
@@ -71,7 +73,7 @@ def get_stats(message):
 @bot.message_handler(commands=["me"])
 def get_stats(message):
     db_object.execute(f"select * from users where user_id = {message.from_user.id}")
-    result = db_object.fetchone()
+    result = db_object.fetchonea()
 
     if not result:
         bot.reply_to(message, "No data...")
