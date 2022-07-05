@@ -13,8 +13,6 @@ server = Flask(__name__)
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
 
-
-
 def add_pull_up(user_id, count):
     db_object.execute(f"UPDATE users SET pull_up = pull_up + {count} WHERE user_id = {user_id}")
     db_connection.commit()
@@ -95,6 +93,7 @@ def schedule_checker():
         sleep(1)
 
 def update_daily():
+    print("Hello!")
     add_press(341883930, 100)
     bot.send_message(341883930, "This is a message to send.")
 
@@ -102,11 +101,11 @@ def update_daily():
 
 if __name__ == "__main__":
 
-    schedule.every(1).minutes.do(update_daily)
+    schedule.every(30).second.do(update_daily)
     #schedule.every().day.at("05:28").do(update_daily)
     Thread(target=schedule_checker).start() 
 
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
     #bot.infinity_polling()
-    server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)))
+    server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)), debug = True)
