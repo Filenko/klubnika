@@ -89,8 +89,8 @@ def index():
 if __name__ == "__main__":
     now = datetime.now()
     current_time = now.strftime("%H:%M")
-    if current_time == "05:09":
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    if current_time == "05:13":
+        bot.send_message(341883930,"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         add_press(341883930, 100)
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
