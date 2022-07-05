@@ -77,12 +77,12 @@ def get_stats(message):
         bot.reply_to(message, "No data...")
     else:
         try: 
-            reply_message = ""
-            reply_message += f"Сделал {result[2]} ажуманий и {result[3]} преСа\n"
-            print("1141414")
+            reply_message = "12"
+            #reply_message += f"Сделал {result[2]} ажуманий и {result[3]} преСа\n"
+            print(result)
             bot.reply_to(message, reply_message)
         except Exception as e:
-            print(e, "23123")
+            print(e)
             bot.reply_to(message, e)
 
 @bot.message_handler(commands=["pull_up"])
