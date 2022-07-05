@@ -82,7 +82,8 @@ def redirect_message():
     bot.process_new_updates([update])
     return "!", 200
 
-@server.route("/", methods=["HEAD", "GET"])
+@server.route("/index", methods=["HEAD", "GET"])
+def index():
     return "!", 200
 
 if __name__ == "__main__":
