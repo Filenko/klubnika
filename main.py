@@ -68,6 +68,18 @@ def get_stats(message):
         bot.reply_to(message, reply_message)
 
 
+@bot.message_handler(commands=["me"])
+def get_stats(message):
+    db_object.execute(f"select * from users where user_id = {message.from_user.id}")
+    result = db_object.fetchone()
+
+    if not result:
+        bot.reply_to(message, "No data...")
+    else:
+        reply_message = ""
+        reply_message += f"Сделал {item[2]} ажуманий и {item[3]} преСа\n"
+        bot.reply_to(message, reply_message)
+
 @bot.message_handler(commands=["pull_up"])
 def get_stats(message):
     reply_message = message.text.split()
