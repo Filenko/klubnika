@@ -33,7 +33,7 @@ def start(message):
     result = db_object.fetchone()
 
     if not result:
-        db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer) VALUES (%s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500))
+        db_object.execute("INSERT INTO users(user_id, username, pull_up, press, buffer_press, buffer_pull) VALUES (%s, %s, %s, %s, %s)", (user_id, username, 0, 0, 500, 500))
         db_connection.commit()
 
 
@@ -88,25 +88,31 @@ def index():
     return "!", 200
 
 
-# def schedule_checker():
-#     while True:
-#         schedule.run_pending()
-#         sleep(1)
+def schedule_checker():
+    while True:
+        schedule.run_pending()
+        sleep(1)
 
-# def update_daily():
-#     print("Hello!")
-#     add_press(341883930, 100)
-#     bot.send_message(341883930, "This is a message to send.")
+def update_daily():
+    db_object.execute("""
+        update Users set buffer_press = buffer_press - 100 + press
+        where press < 100;
+        update Users set buffer_pull = buffer_pull - 100 + pull_up
+        where pull_up < 100;
+        update Users set pull_up = 0, press = 0;
+        """)
+    db_connection.commit()
+    bot.send_message(341883930, "This is a message to send.")
 
 
 
 if __name__ == "__main__":
 
-    # schedule.every(2).minutes.do(update_daily)
-    # #schedule.every().day.at("05:28").do(update_daily)
-    # Thread(target=schedule_checker).start() 
-
     bot.remove_webhook()
     bot.set_webhook(url=APP_URL)
+    schedule.every(2).minutes.do(update_daily)
+    # #schedule.every().day.at("05:28").do(update_daily)
+    #schedule.every().day.at("6:21").do(update_daily)
+    Thread(target=schedule_checker).start() 
     #bot.infinity_polling()
     server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8443)), debug = True)
